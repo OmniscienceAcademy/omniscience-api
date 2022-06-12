@@ -1,0 +1,33 @@
+[tool.pylint.MESSAGE_CONTROL]
+disable = """
+    line-too-long,
+    abstract-method,
+    no-member,
+"""
+enable = "useless-suppression"
+
+[tool.pylint.REPORTS]
+reports="no"
+
+
+[tool.pylint.FORMAT]
+max-line-length="90"
+
+[tool.pylint.BASIC]
+good-names = "_,i,e,setUp,tearDown,maxDiff,df,*LR*"
+
+
+[tool.black]
+target-version = ['py38']
+extend-exclude = '''
+/api/snapshots/snap_tests.py
+/misc/example/questions_query_cossim.py
+'''
+
+[tool.isort]
+profile = "black"
+
+
+[tool.bandit]
+exclude_dirs = ["djenv",]
+skips = ["B101",]

@@ -1,0 +1,17 @@
+*.pyc
+config/secret_key.py
+db.sqlite3
+static/**
+djenv/**
+api/credentials_postgre.py
+misc/log_errors.txt
+misc/log_access.txt
+config/is_prod.py
+.envbashrc
+
+# Elastic Beanstalk Files
+# .elasticbeanstalk/*
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+misc/.DS_Store
+.DS_Store

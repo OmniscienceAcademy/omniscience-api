@@ -1,0 +1,7 @@
+awsebcli
+autopep8
+line_profiler
+pre-commit
+black
+coverage
+snapshottest

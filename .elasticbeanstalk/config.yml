@@ -1,0 +1,10 @@
+branch-defaults:
+  main:
+    environment: omniscienceapi-env
+  develop:
+    environment: omniscienceapi-env-dev
+global:
+  application_name: omniscienceapi
+  default_region: eu-west-3
+  profile: null
+  sc: git

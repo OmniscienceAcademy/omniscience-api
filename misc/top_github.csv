@@ -1,0 +1,51 @@
+,resourceurl,citationcount,title,year
+0,https://github.com/D-X-Y/ResNeXt-DenseNet/blob/master/README.md,73484,deep residual learning for image recognition,2016.0
+1,http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/,25181,u net convolutional networks for biomedical image segmentation,2015.0
+2,https://github.com/open-mmlab/mmsegmentation/blob/master/configs/unet/README.md,25181,u net convolutional networks for biomedical image segmentation,2015.0
+3,https://github.com/keillernogueira/remote_sensing_segmentation/blob/master/README.md,25181,u net convolutional networks for biomedical image segmentation,2015.0
+4,https://github.com/yun-liu/plot-edge-pr-curves/blob/master/readme.md,22605,a computational approach to edge detection,1986.0
+5,https://github.com/bowenc0221/mxnet-gan/blob/master/readme.md,22042,generative adversarial nets,2014.0
+6,https://github.com/XiaoQQin/BERT-fine-tuning-for-twitter-sentiment-analysis/blob/master/test_bert/README.md,21674,bert pre training of deep bidirectional transformers for language understanding,2018.0
+7,https://github.com/PaddlePaddle/PaddleHelix/blob/dev/apps/pretrained_protein/tape/README_cn.md,21674,bert pre training of deep bidirectional transformers for language understanding,2018.0
+8,https://github.com/FuYanzhe2/Name-Entity-Recognition/blob/master/BERT-BiLSTM-CRF-NER/bert/README.md,21674,bert pre training of deep bidirectional transformers for language understanding,2018.0
+9,https://github.com/PaddlePaddle/PaddleHelix/blob/dev/apps/pretrained_protein/tape/README_cn.md,19209,attention is all you need,2017.0
+10,https://github.com/PaddlePaddle/PaddleHelix/blob/dev/apps/pretrained_protein/tape/README.md,19209,attention is all you need,2017.0
+11,https://github.com/makefile/frcnn/blob/master/README.md,14388,faster r cnn towards real time object detection with region proposal networks,2015.0
+12,https://github.com/liuzhuang13/DenseNet,14204,densely connected convolutional networks,2017.0
+13,https://github.com/D-X-Y/ResNeXt-DenseNet/blob/master/README.md,14204,densely connected convolutional networks,2017.0
+14,https://github.com/liuzhuang13/DenseNet/blob/master/README.md,14204,densely connected convolutional networks,2017.0
+15,https://github.com/object-detection-algorithm/R-CNN/blob/master/README.md,13719,rich feature hierarchies for accurate object detection and semantic segmentation,2014.0
+16,https://github.com/darrelllong/Public-key-Cryptography-in-Python/blob/main/README.md,13431,a method for obtaining digital signatures and public key cryptosystems,1978.0
+17,https://github.com/yun-liu/plot-edge-pr-curves/blob/master/readme.md,12785,normalized cuts and image segmentation,2000.0
+18,http://www.cis.upenn.edu/~jshi/software/,12785,normalized cuts and image segmentation,2000.0
+19,https://sites.google.com/a/deepmind.com/dqn/,12650,human level control through deep reinforcement learning,2015.0
+20,https://github.com/danielegrattarola/deep-q-atari/blob/master/readme.md,12650,human level control through deep reinforcement learning,2015.0
+21,https://github.com/alphawzm/ns2-leach/blob/master/README.md,11866,energy efficient communication protocol for wireless microsensor networks,2000.0
+22,https://github.com/weiliu89/caffe/tree/ssd,10981,ssd single shot multibox detector,2016.0
+23,https://github.com/interpretml/interpret/blob/develop/README.md,10493,greedy function approximation a gradient boosting machine,2001.0
+24,https://github.com/makefile/frcnn/blob/master/README.md,9639,fast r cnn,2015.0
+25,https://github.com/yun-liu/plot-edge-pr-curves/blob/master/readme.md,9482,mean shift a robust approach toward feature space analysis,2002.0
+26,https://github.com/albanie/mcndatasets/blob/master/readme.md,9455,the pascal visual object classes voc challenge,2010.0
+27,https://github.com/BVLC/caffe/,9136,caffe convolutional architecture for fast feature embedding,2014.0
+28,https://github.com/huanghao-code/VisCNN_ECCV_2014_Zeiler/blob/master/README.md,8676,visualizing and understanding convolutional networks,2014.0
+29,https://github.com/affinelayer/pix2pix-tensorflow/blob/master/README.md,8436,image to image translation with conditional adversarial networks,2017.0
+30,https://github.com/phillipi/pix2pix,8436,image to image translation with conditional adversarial networks,2017.0
+31,https://github.com/zhaoying9105/vid2vid-cn/blob/master/README_.md,8436,image to image translation with conditional adversarial networks,2017.0
+32,https://github.com/open-mmlab/mmdetection/blob/master/configs/mask_rcnn/README.md,8106,mask r cnn,2017.0
+33,https://github.com/taesungp/contrastive-unpaired-translation/blob/master/README.md,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+34,https://github.com/tatsuyah/cyclegan-models/blob/master/readme.md,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+35,https://github.com/tatsuyah/CycleGAN-Models/blob/master/README.md,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+36,https://github.com/zhaoying9105/vid2vid-cn/blob/master/README_.md,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+37,https://github.com/junyanz/CycleGAN,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+38,https://junyanz.github.io/CycleGAN/,7918,unpaired image to image translation using cycle consistent adversarial networks,2017.0
+39,https://github.com/vhrique/ELM/blob/master/README.md,7914,extreme learning machine theory and applications,2006.0
+40,https://github.com/Adamdad/keras-YOLOv3-mobilenet/blob/master/README.md,7736,mobilenets efficient convolutional neural networks for mobile vision applications,2017.0
+41,https://github.com/DrSleep/tensorflow-deeplab-resnet/blob/master/README.md,7176,deeplab semantic image segmentation with deep convolutional nets atrous convolution and fully connected crfs,2018.0
+42,https://github.com/TheLegendAli/DeepLab-Context2/blob/master/README.md,7176,deeplab semantic image segmentation with deep convolutional nets atrous convolution and fully connected crfs,2018.0
+43,https://github.com/duecredit/duecredit/blob/master/README.md,7000,the numpy array a structure for efficient numerical computation,2011.0
+44,https://github.com/makefile/frcnn/blob/master/README.md,6922,faster r cnn towards real time object detection with region proposal networks,2017.0
+45,https://github.com/banmitsu/mRMR/blob/master/README.md,6734,feature selection based on mutual information criteria of max dependency max relevance and min redundancy,2005.0
+46,https://github.com/darrelllong/Public-key-Cryptography-in-Python/blob/main/README.md,6589,a public key cryptosystem and a signature scheme based on discrete logarithms,1985.0
+47,https://github.com/Sh-Zh-7/intelligent-transportation-system/blob/master/README.md,6525,segnet a deep convolutional encoder decoder architecture for image segmentation,2017.0
+48,https://github.com/joey711/phyloseq-demo,6324,phyloseq an r package for reproducible interactive analysis and graphics of microbiome census data,2013.0
+49,https://github.com/PaddlePaddle/PaddleHelix/blob/dev/apps/pretrained_protein/tape/README.md,6130,attention is all you need,2017.0

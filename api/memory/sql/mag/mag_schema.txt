@@ -1,0 +1,266 @@
+CREATE TABLE IF NOT EXISTS public.affiliations
+(
+    affiliationid bigint,
+    rank integer,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    gridid text COLLATE pg_catalog."default",
+    officialpage text COLLATE pg_catalog."default",
+    wikipage text COLLATE pg_catalog."default",
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    iso3166code text COLLATE pg_catalog."default",
+    latitude real,
+    longitude real,
+    createddate timestamp without time zone
+)
+
+
+CREATE TABLE IF NOT EXISTS public.authorextendedattributes
+(
+    authorid bigint,
+    attributetype integer,
+    attributevalue text COLLATE pg_catalog."default"
+)
+
+CREATE TABLE IF NOT EXISTS public.authors
+(
+    authorid bigint,
+    rank integer,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    lastknownaffiliationid bigint,
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    createddate timestamp without time zone
+)
+
+
+CREATE TABLE IF NOT EXISTS public.conferenceinstances
+(
+    conferenceinstanceid bigint,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    conferenceseriesid bigint,
+    location text COLLATE pg_catalog."default",
+    officialurl text COLLATE pg_catalog."default",
+    startdate timestamp without time zone,
+    enddate timestamp without time zone,
+    abstractregistrationdate timestamp without time zone,
+    submissiondeadlinedate timestamp without time zone,
+    notificationduedate timestamp without time zone,
+    finalversionduedate timestamp without time zone,
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    latitude real,
+    longitude real,
+    createddate timestamp without time zone
+)
+
+
+CREATE TABLE IF NOT EXISTS public.conferenceseries
+(
+    conferenceseriesid bigint,
+    rank integer,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    createddate timestamp without time zone
+)
+
+CREATE TABLE IF NOT EXISTS public.entityrelatedentities
+(
+    entityid bigint,
+    entitytype text COLLATE pg_catalog."default",
+    relatedentityid bigint,
+    relatedentitytype text COLLATE pg_catalog."default",
+    relatedtype integer,
+    score real
+)
+
+
+CREATE TABLE IF NOT EXISTS public.fieldofstudychildren
+(
+    fieldofstudyid bigint,
+    childfieldofstudyid bigint
+)
+
+
+CREATE TABLE IF NOT EXISTS public.fieldofstudyextendedattributes
+(
+    fieldofstudyid bigint,
+    attributetype integer,
+    attributevalue text COLLATE pg_catalog."default"
+)
+
+
+CREATE TABLE IF NOT EXISTS public.fieldsofstudy
+(
+    fieldofstudyid bigint,
+    rank integer,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    maintype text COLLATE pg_catalog."default",
+    level integer,
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    createddate timestamp without time zone
+)
+
+CREATE TABLE IF NOT EXISTS public.journals
+(
+    journalid bigint,
+    rank integer,
+    normalizedname text COLLATE pg_catalog."default",
+    displayname text COLLATE pg_catalog."default",
+    issn text COLLATE pg_catalog."default",
+    publisher text COLLATE pg_catalog."default",
+    webpage text COLLATE pg_catalog."default",
+    papercount bigint,
+    paperfamilycount bigint,
+    citationcount bigint,
+    createddate timestamp without time zone
+)
+
+CREATE TABLE IF NOT EXISTS public.paperauthoraffiliations
+(
+    "PaperId" bigint,
+    "AuthorId" bigint,
+    "AffiliationId" double precision,
+    "AuthorSequenceNumber" bigint,
+    "OriginalAuthor" text COLLATE pg_catalog."default",
+    "OriginalAffiliation" text COLLATE pg_catalog."default"
+)
+
+
+CREATE TABLE IF NOT EXISTS public.papercitationcontexts
+(
+    "PaperId" bigint,
+    "PaperReferenceId" bigint,
+    "CitationContext" text COLLATE pg_catalog."default"
+)
+
+
+CREATE TABLE IF NOT EXISTS public.paperextendedattributes
+(
+    paperid bigint,
+    attributetype integer,
+    attributevalue text COLLATE pg_catalog."default"
+)
+
+
+CREATE TABLE IF NOT EXISTS public.paperfieldsofstudy
+(
+    paperid bigint,
+    fieldofstudyid bigint,
+    score real
+)
+
+CREATE TABLE IF NOT EXISTS public.papermesh
+(
+    paperid bigint,
+    descriptorui text COLLATE pg_catalog."default",
+    descriptorname text COLLATE pg_catalog."default",
+    qualifierui text COLLATE pg_catalog."default",
+    qualifiername text COLLATE pg_catalog."default",
+    ismajortopic boolean
+)
+
+CREATE TABLE IF NOT EXISTS public.paperrecommendations
+(
+    paperid bigint,
+    recommendedpaperid bigint,
+    score real
+)
+
+
+CREATE TABLE IF NOT EXISTS public.paperreferences
+(
+    paperid bigint,
+    paperreferenceid bigint
+)
+
+
+CREATE TABLE IF NOT EXISTS public.paperresources
+(
+    paperid bigint,
+    resourcetype integer,
+    resourceurl text COLLATE pg_catalog."default",
+    sourceurl text COLLATE pg_catalog."default",
+    relationshiptype integer
+)
+
+CREATE TABLE IF NOT EXISTS public.papers
+(
+    "PaperId" bigint,
+    "Rank" bigint,
+    "Doi" text COLLATE pg_catalog."default",
+    "DocType" text COLLATE pg_catalog."default",
+    "PaperTitle" text COLLATE pg_catalog."default",
+    "OriginalTitle" text COLLATE pg_catalog."default",
+    "BookTitle" text COLLATE pg_catalog."default",
+    "Year" double precision,
+    "Date" text COLLATE pg_catalog."default",
+    "OnlineDate" text COLLATE pg_catalog."default",
+    "Publisher" text COLLATE pg_catalog."default",
+    "JournalId" double precision,
+    "ConferenceSeriesId" double precision,
+    "ConferenceInstanceId" double precision,
+    "Volume" double precision,
+    "Issue" double precision,
+    "FirstPage" text COLLATE pg_catalog."default",
+    "LastPage" text COLLATE pg_catalog."default",
+    "ReferenceCount" bigint,
+    "CitationCount" bigint,
+    "EstimatedCitation" bigint,
+    "OriginalVenue" text COLLATE pg_catalog."default",
+    "FamilyId" double precision,
+    "FamilyRank" double precision,
+    "DocSubTypes" text COLLATE pg_catalog."default",
+    "CreatedDate" text COLLATE pg_catalog."default"
+)
+
+CREATE TABLE IF NOT EXISTS public.papers
+(
+    "PaperId" bigint,
+    "Rank" bigint,
+    "Doi" text COLLATE pg_catalog."default",
+    "DocType" text COLLATE pg_catalog."default",
+    "PaperTitle" text COLLATE pg_catalog."default",
+    "OriginalTitle" text COLLATE pg_catalog."default",
+    "BookTitle" text COLLATE pg_catalog."default",
+    "Year" double precision,
+    "Date" text COLLATE pg_catalog."default",
+    "OnlineDate" text COLLATE pg_catalog."default",
+    "Publisher" text COLLATE pg_catalog."default",
+    "JournalId" double precision,
+    "ConferenceSeriesId" double precision,
+    "ConferenceInstanceId" double precision,
+    "Volume" double precision,
+    "Issue" double precision,
+    "FirstPage" text COLLATE pg_catalog."default",
+    "LastPage" text COLLATE pg_catalog."default",
+    "ReferenceCount" bigint,
+    "CitationCount" bigint,
+    "EstimatedCitation" bigint,
+    "OriginalVenue" text COLLATE pg_catalog."default",
+    "FamilyId" double precision,
+    "FamilyRank" double precision,
+    "DocSubTypes" text COLLATE pg_catalog."default",
+    "CreatedDate" text COLLATE pg_catalog."default"
+)
+
+CREATE TABLE IF NOT EXISTS public.relatedfieldofstudy
+(
+    fieldofstudyid1 bigint,
+    type1 text COLLATE pg_catalog."default",
+    fieldofstudyid2 bigint,
+    type2 text COLLATE pg_catalog."default",
+    rank real
+)

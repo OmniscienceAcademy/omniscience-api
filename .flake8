@@ -1,0 +1,10 @@
+[flake8]
+ignore = D203,W503,E203
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,snap_tests.py
+max-complexity = 10
+
+max-returns = 2
+max-arguments = 4
+max-line-length = 90
+
+min_python_version = 3.8
