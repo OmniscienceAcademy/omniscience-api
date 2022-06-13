@@ -34,3 +34,9 @@ To update the serialization:
 python manage.py test --snapshot-update
 git commit -m "update snapshot" --no-verify
 ```
+
+
+
+# Infrastructure
+
+![Omnisciecne Architecture](misc/pictures/OmniscienceArchitecture.png)

@@ -64,7 +64,3 @@ WILLIAM RAMSAY
 
 > A fact acquires its true and full value only through the idea which is developed from it.
 JUSTUS VON LIEBIG
-
-
-
-[Supporting Us]
