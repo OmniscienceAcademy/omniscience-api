@@ -39,4 +39,4 @@ git commit -m "update snapshot" --no-verify
 
 # Infrastructure
 
-![Omnisciecne Architecture](/omniscience-api/misc/pictures/OmniscienceArchitecture.png "OmniscienceArchitecture")
+![Omnisciecne Architecture](misc/pictures/OmniscienceArchitecture.png)
