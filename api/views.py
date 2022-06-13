@@ -329,7 +329,7 @@ def get_autocompletion(request: HttpRequest, user_query: str):
     titles = [
         {"type": "📜", "name": doc["content"]} for doc in titles["query"]["documents"]
     ]
-    questions = [{"type": "❓", "name": q["question"]} for q in questionings]
+    questions = [{"type": "❓", "name": q["question"]} for q in questionings][:0]
 
     if correct.strip() == user_query.strip():
         res = [{"type": "", "name": user_query}] + questions + titles
