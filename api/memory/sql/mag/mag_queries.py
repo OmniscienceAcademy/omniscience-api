@@ -141,7 +141,7 @@ def fetch_mag_authors_from_articles(
     return res
 
 
-def fetch_authors_by_ids(mag_author_ids: List[int]) -> pd.DataFrame:
+def fetch_authors_by_ids(mag_author_ids: List[int], only_french: bool) -> pd.DataFrame:
 
     query = (
         session.query(
@@ -163,8 +163,8 @@ def fetch_authors_by_ids(mag_author_ids: List[int]) -> pd.DataFrame:
         .filter(Authors.authorid.in_(mag_author_ids))
     )
 
-    # if only_french:
-    #     query = query.filter(Affiliations.iso3166code == "FR")
+    if only_french:
+        query = query.filter(Affiliations.iso3166code == "FR")
     query = query.all()
     return pd.DataFrame(
         query,

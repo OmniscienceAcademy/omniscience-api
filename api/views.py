@@ -260,10 +260,12 @@ def search_fields_of_study(request: HttpRequest, query: str):
     )
 
 
-def get_authors_of_field_of_study(request: HttpRequest, field_of_study_id: int):
+def get_authors_of_field_of_study(
+    request: HttpRequest, field_of_study_id: int, only_french: int
+):
     """Return the fields of study corresponding to the ids."""
     ids = fetch_authors_of_field_of_study2(field_of_study_id)
-    df = fetch_authors_by_ids(mag_author_ids=ids)
+    df = fetch_authors_by_ids(mag_author_ids=ids, only_french=bool(only_french))
     return JsonResponse({"authors": df.to_dict(orient="records")})
 
 
