@@ -141,7 +141,9 @@ def fetch_mag_authors_from_articles(
     return res
 
 
-def fetch_authors_by_ids(mag_author_ids: List[int], only_french: bool) -> pd.DataFrame:
+def fetch_authors_by_ids(
+    mag_author_ids: List[int], only_french: bool = False
+) -> pd.DataFrame:
 
     query = (
         session.query(
