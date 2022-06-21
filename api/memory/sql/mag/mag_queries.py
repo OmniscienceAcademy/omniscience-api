@@ -326,7 +326,6 @@ def fetch_fields_of_study_by_ids_slow(mag_ids: List[List[int]]) -> pd.DataFrame:
         .filter(PaperFieldsOfStudy.paperid.in_(mag_ids_clean))
         .filter(FieldsOfStudy.level > 1)
     ).all()
-    session.close()
 
     df = pd.DataFrame(
         results, columns=["mag_id", "fieldofstudy", "fieldofstudyid", "level"]
@@ -349,7 +348,6 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
             PaperFieldsOfStudy.paperid, PaperFieldsOfStudy.fieldofstudyid
         ).filter(PaperFieldsOfStudy.paperid.in_(mag_ids_clean))
     ).all()
-    session.close()
 
     df_mag_ids_fieldofstudyid = pd.DataFrame(
         results, columns=["mag_id", "fieldofstudyid"]
@@ -366,7 +364,6 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
         .filter(FieldsOfStudy.fieldofstudyid.in_(list_fields_of_study_id))
         .filter(FieldsOfStudy.level > 1)
     ).all()
-    session.close()
 
     df_fields = pd.DataFrame(
         results, columns=["fieldofstudy", "fieldofstudyid", "level"]
@@ -418,7 +415,6 @@ def fetch_doctypes_by_ids(mag_ids: List[List[int]]) -> Dict[str, List[DocType]]:
         .filter(Papers.PaperId.in_(mag_ids_clean))
         .all()
     )
-    session.close()
 
     res: Dict[str, List[DocType]] = {}
     for doctype, magId in results:
@@ -437,7 +433,6 @@ def fetch_paper_urls(mag_ids: List[int]) -> Dict[int, str]:
         .filter(PaperUrls.PaperId.in_(mag_ids))
         .all()
     )
-    session.close()
 
     query_result = {magId: paper_url for paper_url, magId in results}
     res = {}
