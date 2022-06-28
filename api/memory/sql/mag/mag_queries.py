@@ -141,7 +141,9 @@ def fetch_mag_authors_from_articles(
     return res
 
 
-def fetch_authors_by_ids(mag_author_ids: List[int]) -> pd.DataFrame:
+def fetch_authors_by_ids(
+    mag_author_ids: List[int], only_french: bool = False
+) -> pd.DataFrame:
 
     query = (
         session.query(
@@ -163,8 +165,8 @@ def fetch_authors_by_ids(mag_author_ids: List[int]) -> pd.DataFrame:
         .filter(Authors.authorid.in_(mag_author_ids))
     )
 
-    # if only_french:
-    #     query = query.filter(Affiliations.iso3166code == "FR")
+    if only_french:
+        query = query.filter(Affiliations.iso3166code == "FR")
     query = query.all()
     return pd.DataFrame(
         query,
@@ -324,7 +326,6 @@ def fetch_fields_of_study_by_ids_slow(mag_ids: List[List[int]]) -> pd.DataFrame:
         .filter(PaperFieldsOfStudy.paperid.in_(mag_ids_clean))
         .filter(FieldsOfStudy.level > 1)
     ).all()
-    session.close()
 
     df = pd.DataFrame(
         results, columns=["mag_id", "fieldofstudy", "fieldofstudyid", "level"]
@@ -347,7 +348,6 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
             PaperFieldsOfStudy.paperid, PaperFieldsOfStudy.fieldofstudyid
         ).filter(PaperFieldsOfStudy.paperid.in_(mag_ids_clean))
     ).all()
-    session.close()
 
     df_mag_ids_fieldofstudyid = pd.DataFrame(
         results, columns=["mag_id", "fieldofstudyid"]
@@ -364,7 +364,6 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
         .filter(FieldsOfStudy.fieldofstudyid.in_(list_fields_of_study_id))
         .filter(FieldsOfStudy.level > 1)
     ).all()
-    session.close()
 
     df_fields = pd.DataFrame(
         results, columns=["fieldofstudy", "fieldofstudyid", "level"]
@@ -416,7 +415,6 @@ def fetch_doctypes_by_ids(mag_ids: List[List[int]]) -> Dict[str, List[DocType]]:
         .filter(Papers.PaperId.in_(mag_ids_clean))
         .all()
     )
-    session.close()
 
     res: Dict[str, List[DocType]] = {}
     for doctype, magId in results:
@@ -435,7 +433,6 @@ def fetch_paper_urls(mag_ids: List[int]) -> Dict[int, str]:
         .filter(PaperUrls.PaperId.in_(mag_ids))
         .all()
     )
-    session.close()
 
     query_result = {magId: paper_url for paper_url, magId in results}
     res = {}

@@ -99,7 +99,6 @@ def _fetch_questions(ids: List[int]) -> Dict[s2orcId, Dict[str, Any]]:
         articles[s2orc_id]["tldr"] = row[2]
         articles[s2orc_id]["cossim_tldr_question"] = row[3]
 
-    session.close()
     return articles
 
 
