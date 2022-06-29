@@ -34,7 +34,6 @@ from api.memory.sql.mag.mag_queries import (
     fetch_main_papers_of_field_of_study,
     fetch_resources_field_of_study,
 )
-from api.memory.sql.omni_config_sql import start_db_session
 from api.memory.sql.s2orc.interract_sql import fetch_papers, get_most_cited_ids
 from api.models import SwipeResults
 from api.services.next_word_prediction import complete_query_with_bert
@@ -42,7 +41,6 @@ from api.specs import MAX_N_TOP_ARTICLES_CITED_TO_SHOW
 from config.settings import DEBUG, IS_PROD
 
 
-@start_db_session
 def search_title(request: HttpRequest, user_query):
     """Return the results of the main search bar."""
     # For now only in economy.
@@ -58,13 +56,11 @@ def search_title(request: HttpRequest, user_query):
     return JsonResponse({"articles": articles}, json_dumps_params={"indent": 2})
 
 
-@start_db_session
 def search_abstract(request: HttpRequest, string):
     """DEPRECATED"""
     return JsonResponse({"error": "Deprecated"})
 
 
-@start_db_session
 def index(request: HttpRequest):
     version = "production" if IS_PROD else "developement"
     return JsonResponse(
@@ -72,7 +68,6 @@ def index(request: HttpRequest):
     )
 
 
-@start_db_session
 def get_article_by_id(request: HttpRequest, paper_id):
     """paper_id : article id. Used for article/paper_id urls on the front."""
     try:
@@ -106,7 +101,6 @@ def get_article_by_id(request: HttpRequest, paper_id):
     return JsonResponse(formated_article, json_dumps_params={"indent": 2})
 
 
-@start_db_session
 def top_articles(request: HttpRequest):
     """Top 100 articles from economy."""
     df = pd.read_excel("misc/top_articles.xlsx")
@@ -116,7 +110,6 @@ def top_articles(request: HttpRequest):
 
 
 @csrf_exempt
-@start_db_session
 def get_articles_by_id(request: HttpRequest):
     """Post request containing list of ids.
 
@@ -164,7 +157,6 @@ class DebugEnablingError(Exception):
     pass
 
 
-@start_db_session
 def get_directs_results(
     request: HttpRequest, user_query: str, min_year: int, max_year: int
 ):
@@ -208,7 +200,6 @@ def get_directs_results(
     return JsonResponse({"swipe_session_token": swipe_session_token})
 
 
-@start_db_session
 def get_results_swipe(request: HttpRequest, swipe_session_token: str):
     """Return the results stored in the db."""
     try:
@@ -222,7 +213,6 @@ def get_results_swipe(request: HttpRequest, swipe_session_token: str):
     return JsonResponse(res, json_dumps_params={"indent": 2})
 
 
-@start_db_session
 def run_tests(request: HttpRequest):
     """Run tests."""
     try:
@@ -234,7 +224,6 @@ def run_tests(request: HttpRequest):
 
 
 @csrf_exempt
-@start_db_session
 def get_fields_of_study_by_ids(request: HttpRequest):
     """Return the fields of study corresponding to the ids."""
     ids = request.POST.getlist("ids")
@@ -245,7 +234,6 @@ def get_fields_of_study_by_ids(request: HttpRequest):
     )
 
 
-@start_db_session
 def get_children_of_field_of_study_id(request: HttpRequest, field_of_study_id: int):
     """Return the children fields of study corresponding to the ids."""
     fields_of_study_ids = fetch_field_of_study_children(field_of_study_id)
@@ -255,7 +243,6 @@ def get_children_of_field_of_study_id(request: HttpRequest, field_of_study_id: i
     )
 
 
-@start_db_session
 def get_fields_of_study_level_0_info(request: HttpRequest):
     """Return the fields of study corresponding to the ids."""
     fields_of_study_ids = fetch_fields_of_study_level_0()
@@ -265,7 +252,6 @@ def get_fields_of_study_level_0_info(request: HttpRequest):
     )
 
 
-@start_db_session
 def search_fields_of_study(request: HttpRequest, query: str):
     """Return the fields of study corresponding to the ids."""
     fields_of_study_ids = fetch_fields_of_study_containing_subword(query)
@@ -275,7 +261,6 @@ def search_fields_of_study(request: HttpRequest, query: str):
     )
 
 
-@start_db_session
 def get_authors_of_field_of_study(
     request: HttpRequest, field_of_study_id: int, only_french: int
 ):
@@ -287,7 +272,6 @@ def get_authors_of_field_of_study(
 
 # mag id
 @csrf_exempt
-@start_db_session
 def get_authors_by_ids(request: HttpRequest):
     """Return the fields of study corresponding to the ids."""
     if request.method != "POST":
@@ -299,7 +283,6 @@ def get_authors_by_ids(request: HttpRequest):
     return JsonResponse({"authors": df.to_dict(orient="records")})
 
 
-@start_db_session
 def get_author_by_id(request: HttpRequest, author_id: int):
     """Return the fields of study corresponding to the ids."""
     df = fetch_authors_by_ids([author_id])
@@ -312,7 +295,6 @@ def get_author_by_id(request: HttpRequest, author_id: int):
     )
 
 
-@start_db_session
 def get_top_github_by_field_of_study(request: HttpRequest, field_of_study_id: int):
     """Return the fields of study corresponding to the ids."""
     _ = field_of_study_id
@@ -320,21 +302,18 @@ def get_top_github_by_field_of_study(request: HttpRequest, field_of_study_id: in
     return JsonResponse({"githubs": res})
 
 
-@start_db_session
 def get_search_authors(request: HttpRequest, query: str):
     """Return the fields of study corresponding to the ids."""
     df = fetch_authors(query)
     return JsonResponse({"authors": df.to_dict(orient="records")})
 
 
-@start_db_session
 def get_main_papers_of_field_of_study(request: HttpRequest, field_of_study_id: int):
     """Return the fields of study corresponding to the ids."""
     df = fetch_main_papers_of_field_of_study(field_of_study_id)
     return JsonResponse({"main_papers": df.to_dict(orient="records")})
 
 
-@start_db_session
 def get_resources_field_of_study(request: HttpRequest, field_of_study_id: int):
     """Return the fields of study corresponding to the ids."""
     df = fetch_resources_field_of_study(field_of_study_id)

@@ -1,5 +1,4 @@
 import os
-from typing import Callable
 
 import sqlalchemy
 from sqlalchemy.orm.session import sessionmaker
@@ -31,16 +30,3 @@ def get_engine_articles():
 
 
 session = sessionmaker(bind=get_engine_articles())()
-
-
-# a decorator to start and close postre session
-def start_db_session(func: Callable) -> Callable:
-    def modified_func(*args, **kwargs):
-        global session
-        session = sessionmaker(bind=get_engine_articles())()
-        res = func(*args, **kwargs)
-        session.close()
-        get_engine_articles().dispose()  # type: ignore
-        return res
-
-    return modified_func
