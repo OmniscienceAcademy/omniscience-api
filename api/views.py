@@ -335,7 +335,7 @@ def get_autocompletion(request: HttpRequest, user_query: str):
     )
     titles = [
         {"type": "📜", "name": doc["content"]} for doc in titles["query"]["documents"]
-    ]
+    ][::-1]
     questions = [{"type": "❓", "name": q["question"]} for q in questionings][:0]
 
     completed_queries = [
