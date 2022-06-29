@@ -29,5 +29,4 @@ def get_engine_articles():
         return engine_postgres
 
 
-Session = sessionmaker(bind=get_engine_articles())
-session = Session()
+session = sessionmaker(bind=get_engine_articles())()

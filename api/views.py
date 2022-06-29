@@ -36,6 +36,7 @@ from api.memory.sql.mag.mag_queries import (
 )
 from api.memory.sql.s2orc.interract_sql import fetch_papers, get_most_cited_ids
 from api.models import SwipeResults
+from api.services.next_word_prediction import complete_query_with_bert
 from api.specs import MAX_N_TOP_ARTICLES_CITED_TO_SHOW
 from config.settings import DEBUG, IS_PROD
 
@@ -260,10 +261,12 @@ def search_fields_of_study(request: HttpRequest, query: str):
     )
 
 
-def get_authors_of_field_of_study(request: HttpRequest, field_of_study_id: int):
+def get_authors_of_field_of_study(
+    request: HttpRequest, field_of_study_id: int, only_french: int
+):
     """Return the fields of study corresponding to the ids."""
     ids = fetch_authors_of_field_of_study2(field_of_study_id)
-    df = fetch_authors_by_ids(mag_author_ids=ids)
+    df = fetch_authors_by_ids(mag_author_ids=ids, only_french=bool(only_french))
     return JsonResponse({"authors": df.to_dict(orient="records")})
 
 
@@ -319,7 +322,11 @@ def get_resources_field_of_study(request: HttpRequest, field_of_study_id: int):
 
 def get_autocompletion(request: HttpRequest, user_query: str):
     """Return the fields of study corresponding to the ids."""
+
     correct = get_corrected_user_query(user_query)
+
+    # use a small bert to complete the next word
+    _completed_queries = complete_query_with_bert(user_query, top_k=3)
 
     questionings = call_question_faiss(correct, k=5)
 
@@ -328,14 +335,19 @@ def get_autocompletion(request: HttpRequest, user_query: str):
     )
     titles = [
         {"type": "📜", "name": doc["content"]} for doc in titles["query"]["documents"]
-    ]
+    ][::-1]
     questions = [{"type": "❓", "name": q["question"]} for q in questionings][:0]
+
+    completed_queries = [
+        {"type": "🧐", "name": c_query} for c_query in _completed_queries
+    ]
 
     if correct.strip() == user_query.strip():
         res = [{"type": "", "name": user_query}] + questions + titles
     else:
         res = (
             [{"type": "", "name": user_query}, {"type": "😘", "name": correct}]
+            + completed_queries
             + titles
             + questions
         )

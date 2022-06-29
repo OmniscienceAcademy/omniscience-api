@@ -173,6 +173,5 @@ def get_most_cited_ids(ids: Iterable[int], N=10) -> List[int]:
     query = query.order_by(ArticleS2ORC.nb_inbound_citations.desc())
     query = query.limit(N)
     most_cited_ids: List[s2orcId] = [row[0] for row in query]
-    session.close()
 
     return most_cited_ids
