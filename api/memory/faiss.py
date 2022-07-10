@@ -178,5 +178,5 @@ def get_faiss_scores(
     cosine_similarities = call_cosine_similarity_api(user_query, sentences)
     faiss_scores: Dict[s2orcId, float] = {}
     for i, s2orc_id in enumerate(papers.keys()):
-        faiss_scores[s2orc_id] = float(cosine_similarities[i])
+        faiss_scores[s2orc_id] = float(cosine_similarities[i])  # type:ignore
     return faiss_scores

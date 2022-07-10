@@ -1,4 +1,6 @@
 import os
+from typing import Callable, TypeVar
+import psycopg2
 
 import sqlalchemy
 from sqlalchemy.orm.session import sessionmaker
@@ -27,6 +29,29 @@ def get_engine_articles():
             # pool_pre_ping=True,
         )
         return engine_postgres
+    else:
+        raise Exception()
 
 
 session = sessionmaker(bind=get_engine_articles())()
+session.close()
+
+from typing import Any, Callable, TypeVar
+
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+# a decorator to start and close postre session
+def start_db_session(func: F) -> F:
+    def modified_func(*args, **kwargs):
+        try:
+            res = func(*args, **kwargs)
+        except:
+            global session
+            session = sessionmaker(bind=get_engine_articles())()
+            res = func(*args, **kwargs)
+            session.close()
+            get_engine_articles().dispose()
+        return res
+
+    return modified_func  # type:ignore
