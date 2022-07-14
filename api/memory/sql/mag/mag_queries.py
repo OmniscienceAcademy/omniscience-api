@@ -2,6 +2,7 @@ from typing import Dict, List, Literal
 
 import pandas as pd
 
+import api.memory.sql.omni_config_sql as omni_config_sql
 from api.memory.sql.mag.mag_schema import (
     Affiliations,
     Authors,
@@ -14,7 +15,6 @@ from api.memory.sql.mag.mag_schema import (
     Papers,
     PaperUrls,
 )
-from api.memory.sql.omni_config_sql import session
 
 
 def select_mag_id(mag_id: List[int]):
@@ -27,7 +27,7 @@ def select_mag_id(mag_id: List[int]):
 def fetch_fields_of_study(fieldofstudyid: List[int]) -> pd.DataFrame:
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             FieldsOfStudy.fieldofstudyid,
             FieldsOfStudy.rank,
             FieldsOfStudy.displayname,
@@ -57,7 +57,7 @@ def fetch_fields_of_study(fieldofstudyid: List[int]) -> pd.DataFrame:
 
 def fetch_field_of_study_children(fieldofstudyid: int) -> List[int]:
     query = (
-        session.query(
+        omni_config_sql.session.query(
             FieldOfStudyChildren.fieldofstudyid,
             FieldOfStudyChildren.childfieldofstudyid,
         )
@@ -69,7 +69,7 @@ def fetch_field_of_study_children(fieldofstudyid: int) -> List[int]:
 
 def fetch_fields_of_study_level_0() -> List[int]:
     query = (
-        session.query(FieldsOfStudy.fieldofstudyid)
+        omni_config_sql.session.query(FieldsOfStudy.fieldofstudyid)
         .filter(FieldsOfStudy.level == 0)
         .all()
     )
@@ -81,7 +81,7 @@ def fetch_fields_of_study_containing_subword(subword: str) -> List[int]:
         return []
 
     query = (
-        session.query(FieldsOfStudy.fieldofstudyid)
+        omni_config_sql.session.query(FieldsOfStudy.fieldofstudyid)
         .filter(FieldsOfStudy.displayname.contains(subword))
         .all()
     )
@@ -92,7 +92,7 @@ def fetch_authors_of_field_of_study2(fieldofstudyid: int) -> List[int]:
     """Same function but using join. exemple : 41350136"""
 
     query = (
-        session.query(Authors.authorid)
+        omni_config_sql.session.query(Authors.authorid)
         .join(
             PaperAuthorAffiliations,
             PaperAuthorAffiliations.AuthorId == Authors.authorid,
@@ -116,7 +116,7 @@ def fetch_mag_authors_from_articles(
     # return Dict of Dict of form: mag_paper_id -> (mag_author_id -> author_name)
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             Authors.authorid,
             Authors.displayname,
             PaperAuthorAffiliations.PaperId,
@@ -146,7 +146,7 @@ def fetch_authors_by_ids(
 ) -> pd.DataFrame:
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             Authors.authorid,
             Authors.displayname,
             Authors.lastknownaffiliationid,
@@ -190,7 +190,9 @@ def fetch_github(mag_paper_ids: List[int]) -> Dict[int, List[str]]:
     # Returns: mag_paper_id -> list of github urls
 
     query = (
-        session.query(PaperResources.paperid, PaperResources.resourceurl)
+        omni_config_sql.session.query(
+            PaperResources.paperid, PaperResources.resourceurl
+        )
         .filter(PaperResources.paperid.in_(mag_paper_ids))
         .filter(PaperResources.resourceurl.contains("github"))
     )
@@ -208,7 +210,7 @@ def fetch_github(mag_paper_ids: List[int]) -> Dict[int, List[str]]:
 def _fetch_top_github_snippet_():
 
     subquery = (
-        session.query(PaperResources.paperid)
+        omni_config_sql.session.query(PaperResources.paperid)
         .join(Papers)
         .filter(PaperResources.resourceurl.contains("github"))
         .order_by(Papers.CitationCount.desc())
@@ -216,7 +218,7 @@ def _fetch_top_github_snippet_():
         .subquery()
     )
     query = (
-        session.query(
+        omni_config_sql.session.query(
             PaperResources.resourceurl,
             Papers.CitationCount,
             Papers.PaperTitle,
@@ -236,13 +238,13 @@ def fetch_authors(subword: str) -> pd.DataFrame:
     """Too long : 300secondes"""
 
     subquery = (
-        session.query(Authors.authorid)
+        omni_config_sql.session.query(Authors.authorid)
         .filter(Authors.displayname.contains(subword))
         .limit(100)
         .subquery()
     )
     query = (
-        session.query(
+        omni_config_sql.session.query(
             Authors.authorid,
             Authors.displayname,
             Authors.citationcount,
@@ -262,7 +264,7 @@ def fetch_authors(subword: str) -> pd.DataFrame:
 def fetch_main_papers_of_field_of_study(fieldofstudyid: int) -> pd.DataFrame:
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             Papers.PaperId,
             Papers.PaperTitle,
             Papers.Year,
@@ -287,7 +289,7 @@ def fetch_main_papers_of_field_of_study(fieldofstudyid: int) -> pd.DataFrame:
 def fetch_resources_field_of_study(fieldofstudyid: int) -> pd.DataFrame:
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             PaperResources.resourceurl,
             PaperResources.resourcetype,
             Papers.CitationCount,
@@ -313,7 +315,7 @@ def fetch_fields_of_study_by_ids_slow(mag_ids: List[List[int]]) -> pd.DataFrame:
     ]
 
     results = (
-        session.query(
+        omni_config_sql.session.query(
             PaperFieldsOfStudy.paperid,
             FieldsOfStudy.displayname,
             FieldsOfStudy.fieldofstudyid,
@@ -344,7 +346,7 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
     ]
 
     results = (
-        session.query(
+        omni_config_sql.session.query(
             PaperFieldsOfStudy.paperid, PaperFieldsOfStudy.fieldofstudyid
         ).filter(PaperFieldsOfStudy.paperid.in_(mag_ids_clean))
     ).all()
@@ -358,7 +360,7 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
     ]
 
     results = (
-        session.query(
+        omni_config_sql.session.query(
             FieldsOfStudy.displayname, FieldsOfStudy.fieldofstudyid, FieldsOfStudy.level
         )
         .filter(FieldsOfStudy.fieldofstudyid.in_(list_fields_of_study_id))
@@ -381,7 +383,7 @@ def fetch_fields_of_study_by_ids(mag_ids: List[List[int]]) -> pd.DataFrame:
 def fetch_wiki_fields_of_studies(fieldofstudyid: List[int]) -> Dict[int, str]:
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             FieldOfStudyExtendedAttributes.fieldofstudyid,
             FieldOfStudyExtendedAttributes.attributevalue,
         )
@@ -411,7 +413,7 @@ def fetch_doctypes_by_ids(mag_ids: List[List[int]]) -> Dict[str, List[DocType]]:
     ]
 
     results = (
-        session.query(Papers.DocType, Papers.PaperId)
+        omni_config_sql.session.query(Papers.DocType, Papers.PaperId)
         .filter(Papers.PaperId.in_(mag_ids_clean))
         .all()
     )
@@ -429,7 +431,7 @@ def fetch_paper_urls(mag_ids: List[int]) -> Dict[int, str]:
     # the 'int' in the input and the output represent magId
 
     results = (
-        session.query(PaperUrls.SourceUrl, PaperUrls.PaperId)
+        omni_config_sql.session.query(PaperUrls.SourceUrl, PaperUrls.PaperId)
         .filter(PaperUrls.PaperId.in_(mag_ids))
         .all()
     )
@@ -449,26 +451,26 @@ def fetch_paper_urls(mag_ids: List[int]) -> Dict[int, str]:
 #     Get the id of the N most cited articles.
 #     """
 #     engine = get_engine_articles()
-#     Session = sessionmaker(bind=engine)
+#     omni_config_sql.session = omni_config_sql.sessionmaker(bind=engine)
 
 #     # 1. Get list of MAG ids
 #
 #     query = (
-#         session.query(PaperRecommendations.recommendedpaperid)
+#         omni_config_sql.session.query(PaperRecommendations.recommendedpaperid)
 #         .filter(PaperRecommendations.paperid == magId)
 #         .order_by(PaperRecommendations.score.desc())
 #     )
 #     similar_articles_mag_id = [str(article.recommendedpaperid) for article in query]
-#     session.close()
+#     omni_config_sql.session.close()
 
 #     # 2. Get list of S2Orc ids
 #     # TODO: faire des jointures et ordonner par score
 #
-#     query = session.query(ArticleS2ORC.paper_id).filter(
+#     query = omni_config_sql.session.query(ArticleS2ORC.paper_id).filter(
 #         ArticleS2ORC.mag_id.in_(similar_articles_mag_id)
 #     )
 #     similar_articles_s2orc_id = [str(article.id) for article in query]
-#     session.close()
+#     omni_config_sql.session.close()
 #     # This step divise by 2 the number of similar articles
 
 #     return similar_articles_s2orc_id

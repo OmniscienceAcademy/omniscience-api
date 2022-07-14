@@ -2,9 +2,9 @@ from typing import Dict, List, Tuple
 
 from sqlalchemy import func
 
+import api.memory.sql.omni_config_sql as omni_config_sql
 from api.core.containers import Paper, magAuthorId, s2orcId
 from api.memory.sql.mag.mag_schema import PaperAuthorAffiliations, PaperReferences
-from api.memory.sql.omni_config_sql import session
 from api.specs import AUTHOR_TAB_SIZE, MAX_N_ARTICLES_FOR_AUTHOR_EXPLORATION
 
 
@@ -26,7 +26,7 @@ def _get_surrounding_authors(
     mag_article_ids = mag_article_ids[:4]
 
     query = (
-        session.query(
+        omni_config_sql.session.query(
             PaperAuthorAffiliations.AuthorId,
             func.count(PaperReferences.paperreferenceid),
         )

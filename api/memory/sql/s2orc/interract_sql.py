@@ -4,9 +4,9 @@ from typing import Dict, Iterable, List, Optional, Union
 
 import numpy as np
 
+import api.memory.sql.omni_config_sql as omni_config_sql
 from api.core.containers import prePaper0, prePaper1, prePaper2, s2orcId
 from api.memory.sql.clean_fetching import clean_article
-from api.memory.sql.omni_config_sql import session
 from api.memory.sql.questions.questions import fetch_questions
 from api.memory.sql.s2orc.columns import ArticleS2ORC, QuestionAndTldr
 from api.memory.sql.s2orc.interract_sql_aux import (
@@ -95,7 +95,7 @@ def fetch_papers(
     ]
 
     query = (
-        session.query(*columns)
+        omni_config_sql.session.query(*columns)
         .outerjoin(QuestionAndTldr, ArticleS2ORC.paper_id == QuestionAndTldr.paper_id)
         .filter(ArticleS2ORC.paper_id.in_(ids))
     )
@@ -169,7 +169,9 @@ def add_questions(
 
 def get_most_cited_ids(ids: Iterable[int], N=10) -> List[int]:
     # Get the id of the N most cited articles.
-    query = session.query(ArticleS2ORC.paper_id).filter(ArticleS2ORC.paper_id.in_(ids))
+    query = omni_config_sql.session.query(ArticleS2ORC.paper_id).filter(
+        ArticleS2ORC.paper_id.in_(ids)
+    )
     query = query.order_by(ArticleS2ORC.nb_inbound_citations.desc())
     query = query.limit(N)
     most_cited_ids: List[s2orcId] = [row[0] for row in query]

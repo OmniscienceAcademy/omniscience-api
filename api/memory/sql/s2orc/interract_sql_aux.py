@@ -1,12 +1,12 @@
 from typing import Dict, List
 
+import api.memory.sql.omni_config_sql as omni_config_sql
 from api.core.containers import magAuthorId, prePaper0, prePaper1, s2orcId
 from api.memory.sql.mag.mag_queries import (
     fetch_github,
     fetch_mag_authors_from_articles,
     fetch_paper_urls,
 )
-from api.memory.sql.omni_config_sql import session
 from api.memory.sql.s2orc.columns import ArticleS2ORC
 
 
@@ -27,7 +27,7 @@ def clean_outbound_citations(papers: Dict[s2orcId, prePaper0]) -> None:
     for paper in papers.values():
         citations += paper.outbound_citations  # type: ignore
 
-    query = session.query(ArticleS2ORC.paper_id).filter(
+    query = omni_config_sql.session.query(ArticleS2ORC.paper_id).filter(
         ArticleS2ORC.paper_id.in_(citations)
     )
 
