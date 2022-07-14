@@ -1,6 +1,5 @@
 import os
-from typing import Callable, TypeVar
-import psycopg2
+from typing import Any, Callable, TypeVar
 
 import sqlalchemy
 from sqlalchemy.orm.session import sessionmaker
@@ -34,19 +33,20 @@ def get_engine_articles():
 
 
 session = sessionmaker(bind=get_engine_articles())()
-session.close()
-
-from typing import Any, Callable, TypeVar
 
 F = TypeVar("F", bound=Callable[..., Any])
 
 
 # a decorator to start and close postre session
 def start_db_session(func: F) -> F:
+    global session
+
     def modified_func(*args, **kwargs):
+        global session
         try:
             res = func(*args, **kwargs)
-        except:
+        except Exception as e:
+            print(e)
             global session
             session = sessionmaker(bind=get_engine_articles())()
             res = func(*args, **kwargs)

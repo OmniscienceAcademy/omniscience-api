@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
+import api.memory.sql.omni_config_sql as omni_config_sql
 from api.core.containers import s2orcId
-from api.memory.sql.omni_config_sql import session
 from api.memory.sql.s2orc.columns import QuestionAndTldr
 from api.specs import MIN_COS_SIM_ARTICLE_QUESTION
 
@@ -85,7 +85,7 @@ def add_missing_entries(all_top_questions: Dict[int, TopQuestions]) -> None:
 
 
 def _fetch_questions(ids: List[int]) -> Dict[s2orcId, Dict[str, Any]]:
-    query = session.query(
+    query = omni_config_sql.session.query(
         QuestionAndTldr.paper_id,
         QuestionAndTldr.question,
         QuestionAndTldr.tldr,
