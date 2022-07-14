@@ -36,7 +36,7 @@ nlp_language.add_pipe("language_detector", last=True)
 def find_language(text: str) -> Dict[str, Union[str, float]]:
     # returns (for instance): {'language': 'en', 'score': 0.9999960006965927}
     doc = nlp_language(text)
-    return doc._.language
+    return doc._.language  # type: ignore
 
 
 def put_in_bold_matching_words(abstract, user_query):

@@ -28,6 +28,8 @@ def get_engine_articles():
             # pool_pre_ping=True,
         )
         return engine_postgres
+    else:
+        raise Exception()
 
 
 session = sessionmaker(bind=get_engine_articles())()
